@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Detektif Udara — Bersih Udaranya, Sehat Tubuhnya</title>
+<style>
+:root{--bg:#eef8f5;--card:#fff;--ink:#17332f;--muted:#60736f;--primary:#087f73;--primary2:#0ca58f;--gold:#d59a18;--danger:#c94b4b;--ok:#27855d;--line:#d9e8e4;--shadow:0 10px 30px #123a3215}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#dff5ee,#f7fbfa);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink)}
+.app{max-width:480px;margin:auto;min-height:100vh;background:var(--bg);box-shadow:0 0 35px #123a3220}
+header{position:sticky;top:0;z-index:20;background:#ffffffed;backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 16px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px}.brand{font-weight:900}.progress{height:7px;background:#dbe9e5;border-radius:99px;margin-top:10px;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--primary2));width:0}
+main{padding:16px 14px 92px}.screen{display:none}.screen.active{display:block}.hero{padding:26px 10px 12px;text-align:center}.badge{font-size:54px}.hero h1{font-size:29px;line-height:1.05;margin:8px 0}.hero p{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:var(--shadow)}.card h3{margin:0 0 8px}.mini{font-size:13px;color:var(--muted)}.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mission{min-height:105px;text-align:left}.mission.locked{opacity:.48}.icon{font-size:28px}.btn{width:100%;min-height:46px;border:0;border-radius:14px;padding:11px 14px;font-weight:800;font-size:15px;cursor:pointer;background:var(--primary);color:white;margin-top:9px}.btn.secondary{background:#e3f1ee;color:var(--primary)}.btn.gold{background:var(--gold)}.btn.danger{background:var(--danger)}.btn:disabled{opacity:.45;cursor:not-allowed}.row{display:flex;gap:8px}.row>*{flex:1}input,textarea,select{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;background:white}textarea{min-height:100px;resize:vertical}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{padding:8px 10px;border-radius:999px;background:#e7f4f0;font-size:13px}.reveal{border:1px solid var(--line);border-radius:14px;margin:9px 0;overflow:hidden}.reveal button{width:100%;text-align:left;border:0;background:white;padding:13px;font-weight:800}.reveal .body{display:none;padding:0 13px 13px;color:#405b56}.reveal.open .body{display:block}.visual{background:linear-gradient(135deg,#c9eee5,#edf8f5);border-radius:16px;padding:18px;text-align:center;font-size:42px;margin:10px 0}.choice{display:block;width:100%;text-align:left;padding:12px;margin:8px 0;border:2px solid var(--line);border-radius:13px;background:#fff;font-weight:650}.choice.selected{border-color:var(--primary);background:#e5f5f1}.choice.correct{border-color:var(--ok);background:#e9f7ef}.choice.wrong{border-color:var(--danger);background:#fff0f0}.feedback{padding:11px;border-radius:12px;margin-top:9px;font-size:14px}.feedback.ok{background:#e8f7ef;color:#16613f}.feedback.no{background:#fff0f0;color:#8b3030}.video{position:relative;padding-top:56.25%;overflow:hidden;border-radius:15px;background:#111}.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.map{background:#f9fffd;border:1px solid var(--line);border-radius:18px;padding:12px}.center-node{text-align:center;font-weight:900;background:#dff3ee;border:2px solid var(--primary);padding:12px;border-radius:14px;margin-bottom:12px}.branches{display:grid;gap:9px}.branch{border:2px dashed #9bcfc5;border-radius:14px;padding:10px;min-height:72px}.branch h4{margin:0 0 6px;color:var(--primary)}.branch.active{border-style:solid;background:#eefaf7}.cards-bank{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.concept{border:1px solid var(--line);background:white;border-radius:10px;padding:9px;font-size:12px;font-weight:750}.concept.sel{outline:3px solid #bde4dc;background:#effaf7}.placed{background:#e5f5f1;border-radius:8px;padding:5px;margin:4px 0;font-size:12px}.check{display:flex;gap:10px;align-items:flex-start;padding:10px;border-bottom:1px solid var(--line)}.check input{width:auto;margin-top:4px}.score{font-size:35px;font-weight:900;text-align:center;color:var(--primary)}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);background:#fffffff2;border-top:1px solid var(--line);padding:9px 12px;display:flex;gap:8px;z-index:30}.nav button{flex:1}.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#17332f;color:#fff;padding:11px 15px;border-radius:12px;display:none;z-index:50;max-width:90%;text-align:center}
+small{color:var(--muted)}h2{font-size:22px;margin:5px 0 12px}h4{margin:10px 0 6px}.tag{display:inline-block;padding:5px 8px;border-radius:8px;background:#fff0c9;color:#76540c;font-size:12px;font-weight:800}.case{border-left:5px solid var(--gold);padding-left:12px}.certificate{background:white;border:8px double var(--gold);padding:22px 15px;text-align:center;border-radius:10px}.certificate h1{color:#987019}.certificate .seal{font-size:58px}
+@media(min-width:481px){body{padding:20px 0}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="top"><div class="brand">🕵️ Detektif Udara</div><div id="missionLabel">Markas</div></div>
+  <div class="progress"><i id="progressBar"></i></div>
+</header>
+
+<main>
+<section id="start" class="screen active">
+  <div class="hero"><div class="badge">🕵️‍♂️🌬️</div><h1>DETEKTIF UDARA</h1><p><b>Bersih Udaranya, Sehat Tubuhnya</b></p></div>
+  <div class="card">
+    <h3>🎯 Misi Utama</h3>
+    <p>Kamu akan menyelidiki mengapa udara kotor dapat berhubungan dengan gangguan pernapasan. Kumpulkan bukti, pecahkan tantangan, bangun peta konsep, selesaikan kasus, lalu dapatkan lencana Detektif Udara.</p>
+    <label>Nama Detektif</label><input id="studentName" placeholder="Tulis nama lengkapmu">
+    <label style="display:block;margin-top:9px">Kelas</label><input id="studentClass" value="VI">
+    <button class="btn" onclick="startApp()">🚀 MULAI INVESTIGASI</button>
+  </div>
+  <div class="card"><span class="tag">6 MISI</span><p class="mini">Eksplorasi → Video → Kuis → Peta Konsep → PBL → Refleksi → Reward</p></div>
+</section>
+
+<section id="dashboard" class="screen">
+  <h2>🏠 Markas Detektif</h2>
+  <div class="card"><b id="welcome"></b><p class="mini">Selesaikan misi secara berurutan. Misi yang sudah terbuka dapat kamu kunjungi kembali.</p></div>
+  <div class="mission-grid" id="missionGrid"></div>
+</section>
+
+<section id="m1" class="screen">
+<h2>🔎 MISI 1 — Eksplorasi 6 Submateri</h2>
+<div class="card"><p>Ketuk setiap kartu untuk membuka informasi. Setelah semua submateri dibuka dan cek pemahaman selesai, Misi 1 dianggap tuntas.</p></div>
+<div id="materials"></div>
+<button class="btn" onclick="completeMission(1)">🏆 SELESAI MISI 1</button>
+</section>
+
+<section id="m2" class="screen">
+<h2>🎬 MISI 2 — Amati Bukti Video</h2>
+<div class="card"><p>Jangan hanya menonton. Amati fenomena, sumber pencemar, dampak, aktivitas manusia, dan solusi.</p>
+<h3>Video 1</h3><div class="video"><iframe src="https://www.youtube.com/embed/pbrpdUiSYMY" allowfullscreen></iframe></div>
+<h3>Video 2</h3><div class="video"><iframe src="https://www.youtube.com/embed/AIF-uE1CatQ" allowfullscreen></iframe></div></div>
+<div class="card"><h3>📝 Lembar Observasi</h3>
+<label>Bukti asap/debu yang kamu lihat</label><textarea id="obs1"></textarea>
+<label>Sumber pencemar</label><textarea id="obs2"></textarea>
+<label>Dampak yang kamu amati</label><textarea id="obs3"></textarea>
+<label>Solusi yang dapat dilakukan</label><textarea id="obs4"></textarea>
+<button class="btn" onclick="submitObservation()">🔍 PERIKSA BUKTI</button><div id="obsFeedback"></div></div>
+</section>
+
+<section id="m3" class="screen">
+<h2>🧠 MISI 3 — Kuis Detektif Udara</h2>
+<div id="quizArea"></div>
+</section>
+
+<section id="m4" class="screen">
+<h2>🗺️ MISI 4 — Peta Konsep</h2>
+<div class="card"><p><b>Cara bermain:</b> pilih satu kartu konsep, lalu pilih cabang tujuan yang sesuai.</p><div id="mapScore" class="mini"></div></div>
+<div class="map"><div class="center-node">BERSIH UDARANYA, SEHAT TUBUHNYA</div><div class="branches" id="branches"></div></div>
+<div class="card"><h3>🃏 Bank Kartu Konsep</h3><div id="conceptBank" class="cards-bank"></div><button class="btn secondary" onclick="resetMap()">↩️ ULANGI PETA</button></div>
+</section>
+
+<section id="m5" class="screen">
+<h2>🔬 MISI 5 — Investigasi Kasus</h2>
+<div class="card case"><h3>🚨 Misteri Udara Berdebu SD Nusantara</h3><p>SD Nusantara berada dekat jalan raya ramai dan pekarangan tempat warga membakar sampah. Saat istirahat dan olahraga, udara terasa berbau asap dan berdebu. Beberapa siswa terbatuk dan dua siswa yang memiliki asma mengalami sesak napas.</p><h4>Bukti Lapangan</h4><ol><li>Jalan raya dipenuhi bus, truk, dan motor yang menghasilkan asap serta debu.</li><li>Di pekarangan samping sekolah terjadi pembakaran sampah plastik dan daun kering.</li><li>Siswa terbatuk dan dua siswa mengalami sesak napas saat menghirup asap.</li></ol></div>
+<div class="card"><h3>📋 Laporan Investigasi</h3>
+<label>1. Masalah utama</label><textarea id="pbl1"></textarea>
+<label>2. Sumber pencemar</label><textarea id="pbl2"></textarea>
+<label>3. Hubungan dengan kesehatan</label><textarea id="pbl3"></textarea>
+<label>4. Tiga tindakan solusi</label><textarea id="pbl4"></textarea>
+<label>5. Alasan solusi</label><textarea id="pbl5"></textarea>
+<button class="btn" onclick="submitPBL()">📥 KIRIM LAPORAN</button><div id="pblFeedback"></div></div>
+</section>
+
+<section id="m6" class="screen">
+<h2>🌱 MISI 6 — Refleksi & Komitmen</h2>
+<div class="card"><h3>✍️ Refleksi</h3>
+<label>1. Pengetahuan baru apa yang saya peroleh?</label><textarea id="r1"></textarea>
+<label>2. Gangguan pernapasan apa yang paling sering ditemukan di lingkungan sekitar saya?</label><textarea id="r2"></textarea>
+<label>3. Mengapa udara bersih penting bagi kesehatan sistem pernapasan?</label><textarea id="r3"></textarea>
+<label>4. Apa yang dapat saya lakukan untuk membantu menjaga kualitas udara?</label><textarea id="r4"></textarea></div>
+<div class="card"><h3>✅ Self-Check</h3><div id="checks"></div></div>
+<div class="card"><h3>🤝 Komitmen</h3><textarea id="commit" placeholder="Mulai hari ini saya berjanji akan..."></textarea><button class="btn" onclick="submitReflection()">🌟 SELESAI REFLEKSI</button><div id="refFeedback"></div></div>
+</section>
+
+<section id="reward" class="screen">
+<h2>🏅 Reward Detektif Udara</h2>
+<div class="card"><div class="score" id="finalScore">0</div><p style="text-align:center">Skor Akhir / 100</p><div id="finalCategory" style="text-align:center;font-weight:800"></div></div>
+<div class="certificate" id="certificate"><div class="seal">🏅</div><h1>SERTIFIKAT PENGHARGAAN DIGITAL</h1><h2>DETEKTIF UDARA</h2><p>Diberikan kepada:</p><h2 id="certName">Nama Siswa</h2><p>Kelas <span id="certClass">VI</span></p><p>Atas keberhasilan menyelesaikan pembelajaran digital IPAS:<br><b>“Bersih Udaranya, Sehat Tubuhnya”</b></p><p>“BERSIH UDARANYA, SEHAT TUBUHNYA!”</p><p id="certDate"></p></div>
+<button class="btn gold" onclick="window.print()">📜 CETAK / SIMPAN SERTIFIKAT</button>
+<button class="btn secondary" onclick="show('dashboard')">🏠 KEMBALI KE MARKAS</button>
+</section>
+</main>
+
+<div class="nav"><button class="btn secondary" onclick="show('dashboard')">🏠 Markas</button><button class="btn secondary" onclick="goBack()">← Kembali</button></div>
+<div id="toast" class="toast"></div>
+</div>
+
+<script>
+const KEY='detektifUdaraV1';
+let S=JSON.parse(localStorage.getItem(KEY)||'null')||{name:'',klass:'VI',unlocked:1,done:[],quiz:0,map:0,pbl:0,obs:false,reflection:false,material:[],checks:[]};
+const save=()=>localStorage.setItem(KEY,JSON.stringify(S));
+const $=id=>document.getElementById(id);
+function toast(t){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>$('toast').style.display='none',2200)}
+function startApp(){S.name=$('studentName').value.trim();S.klass=$('studentClass').value.trim()||'VI';if(!S.name){toast('Tulis nama Detektif dulu.');return}save();renderDashboard();show('dashboard')}
+function show(id){
+ document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');
+ const n=id==='m1'?1:id==='m2'?2:id==='m3'?3:id==='m4'?4:id==='m5'?5:id==='m6'?6:id==='reward'?7:0;
+ $('missionLabel').textContent=n?'Misi '+n:'Markas';$('progressBar').style.width=(n?Math.min(100,(n-1)/6*100):0)+'%';
+ if(id==='dashboard')renderDashboard(); if(id==='m1')renderMaterials(); if(id==='m3')renderQuiz();if(id==='m4')renderMap();if(id==='m6')renderChecks(); if(id==='reward')renderReward();
+ window.scrollTo(0,0);
+}
+function openMission(n){
+ if(n>S.unlocked){toast('Misi ini masih terkunci. Selesaikan misi sebelumnya.');return}
+ show('m'+n)
+}
+function completeMission(n){
+ if(n===1 && S.material.length<6){toast('Buka semua 6 submateri terlebih dahulu.');return}
+ S.done=Array.from(new Set([...S.done,n]));S.unlocked=Math.max(S.unlocked,Math.min(6,n+1));save();toast('Misi '+n+' selesai!');show(n<6?'m'+(n+1):'reward')
+}
+const mats=[
+['🌬️','Mengapa Udara Bersih Penting?','Udara bersih mengandung oksigen yang dibutuhkan tubuh. Udara kotor dapat mengandung debu, asap, dan zat berbahaya yang dapat mengganggu organ pernapasan.','Oksigen','Tubuh membutuhkan oksigen untuk bernapas.'],
+['🚗','Sumber Pencemar Udara','Contoh sumber pencemar: asap kendaraan, asap pabrik, asap rokok, dan pembakaran sampah.','Sumber pencemar','Asap, debu, dan zat berbahaya dapat mencemari udara.'],
+['🌫️','Polusi Udara & Kualitas Udara','Polusi udara terjadi ketika udara tercemar oleh debu, asap, atau zat berbahaya. Semakin banyak sumber pencemar, kualitas udara dapat menurun.','Kualitas udara','Sumber pencemar → polusi udara → kualitas udara menurun.'],
+['🫁','Gangguan Sistem Pernapasan','Contoh gangguan yang dipelajari: batuk dan pilek, sesak napas, asma, dan ISPA. Faktor pemicunya antara lain polusi udara, asap rokok, debu, dan infeksi.','Faktor pemicu','Polusi, asap rokok, debu, dan infeksi dapat memicu gangguan pernapasan.'],
+['❤️','Dampak terhadap Kesehatan','Gangguan sistem pernapasan dapat menghambat tubuh memperoleh oksigen secara optimal sehingga kesehatan tubuh dapat terganggu.','Dampak','Gangguan pernapasan dapat menghambat perolehan oksigen secara optimal.'],
+['🌱','Cara Menjaga Kesehatan Pernapasan','Cara yang dipelajari: menghirup udara bersih, memakai masker saat berpolusi, tidak merokok, menanam/merawat tanaman, dan menjaga kebersihan lingkungan.','Aksi nyata','Pilih tindakan yang dapat dilakukan untuk menjaga udara dan kesehatan pernapasan.']
+];
+function renderMaterials(){
+ $('materials').innerHTML=mats.map((m,i)=>`<div class="reveal ${S.material.includes(i)?'open':''}" id="mat${i}"><button onclick="toggleMat(${i})">${m[0]} ${i+1}. ${m[1]} ${S.material.includes(i)?'✓':''}</button><div class="body"><div class="visual">${m[0]}</div><p>${m[2]}</p><div class="chips"><span class="chip">${m[3]}</span><span class="chip">${m[4]}</span></div><button class="btn secondary" onclick="markMat(${i})">✓ Sudah saya pahami</button></div></div>`).join('')
+}
+function toggleMat(i){$('mat'+i).classList.toggle('open')}
+function markMat(i){if(!S.material.includes(i))S.material.push(i);save();renderMaterials();toast('Submateri dicatat!')}
+function submitObservation(){
+ const vals=['obs1','obs2','obs3','obs4'].map(x=>$(x).value.trim());
+ const ok=vals.every(Boolean);S.obs=ok;save();$('obsFeedback').innerHTML=`<div class="feedback ${ok?'ok':'no'}">${ok?'Bukti lengkap! Kamu menemukan fenomena, sumber, dampak, dan solusi.':'Lengkapi keempat kolom observasi terlebih dahulu.'}</div>`;
+ if(ok){S.done=Array.from(new Set([...S.done,2]));S.unlocked=Math.max(S.unlocked,3);save();setTimeout(()=>show('m3'),700)}
+}
+const questions=[
+['Udara bersih penting karena tubuh membutuhkan ... untuk bernapas.',['Karbon dioksida','Oksigen','Asap','Debu'],1],
+['Yang termasuk sumber pencemar udara adalah ...',['Tanaman hijau','Udara pegunungan','Asap rokok, debu, dan polusi udara','Air minum'],2],
+['Urutan yang tepat adalah ...',['Kualitas turun → sumber → polusi → risiko','Sumber pencemar → polusi udara → kualitas udara menurun → risiko gangguan','Risiko → polusi → sumber → kualitas','Polusi → kualitas meningkat → sumber'],1],
+['Yang termasuk gangguan pernapasan dalam materi adalah ...',['Batuk dan pilek, sesak napas, asma, ISPA','Sakit gigi dan luka','Patah tulang','Sakit mata'],0],
+['Faktor yang dapat memicu gangguan pernapasan adalah ...',['Polusi udara, asap rokok, debu, infeksi','Air matang','Tanaman','Olahraga ringan'],0],
+['Gangguan pernapasan dapat menyebabkan ...',['Tubuh memperoleh oksigen berlebihan','Tubuh terhambat memperoleh oksigen secara optimal','Udara menjadi bersih','Paru-paru berhenti permanen'],1],
+['Saat berada di area berdebu dan berasap, tindakan yang tepat adalah ...',['Membakar sampah','Memakai masker','Bernapas cepat','Menambah asap'],1],
+['Tindakan yang membantu menjaga kualitas udara adalah ...',['Membakar sampah','Menjaga kebersihan lingkungan','Menambah asap kendaraan','Merokok di ruangan'],1],
+['Mengapa sumber pencemar perlu dikurangi?',['Agar polusi bertambah','Agar kualitas udara lebih terjaga dan risiko gangguan pernapasan berkurang','Agar debu bertambah','Agar udara makin berasap'],1],
+['Contoh tindakan menjaga kesehatan pernapasan adalah ...',['Tidak merokok dan menjaga kebersihan lingkungan','Membakar sampah','Menghirup asap','Menambah debu'],0]
+];
+let qIndex=0,qAnswers=[];
+function renderQuiz(){
+ if(qIndex>=questions.length){renderQuizResult();return}
+ const q=questions[qIndex], chosen=qAnswers[qIndex];
+ $('quizArea').innerHTML=`<div class="card"><span class="tag">LEVEL 1 — ${qIndex+1}/10</span><h3>${q[0]}</h3>${q[1].map((a,i)=>`<button class="choice ${chosen===i?'selected':''}" onclick="answerQ(${i})">${String.fromCharCode(65+i)}. ${a}</button>`).join('')}<div id="qfb"></div></div>`;
+}
+function answerQ(i){qAnswers[qIndex]=i;renderQuiz();$('qfb').innerHTML=`<div class="feedback ${i===questions[qIndex][2]?'ok':'no'}">${i===questions[qIndex][2]?'Benar! Bukti analisismu tepat.':'Belum tepat. Coba periksa kembali materi Misi 1.'}</div>`;setTimeout(()=>{qIndex++;renderQuiz()},650)}
+function renderQuizResult(){
+ let l1=qAnswers.reduce((s,a,i)=>s+(a===questions[i][2]?4:0),0);
+ S.quiz=l1;save();
+ $('quizArea').innerHTML=`<div class="card"><div class="score">${l1}/40</div><p style="text-align:center">Level 1 selesai.</p><p>Untuk menyelesaikan Misi 3, kamu juga harus menyelesaikan Level 2 dan Level 3.</p><button class="btn" onclick="level2()">➡️ LANJUT LEVEL 2</button></div>`;
+}
+function level2(){
+ const items=[['Asap kendaraan','Gas knalpot kendaraan'],['Asap pabrik','Cerobong industri'],['Pembakaran sampah','Membakar daun/plastik'],['Gangguan pernapasan','Hambatan memperoleh oksigen optimal'],['Menjaga kebersihan','Mengurangi sumber kotoran/asap']];
+ $('quizArea').innerHTML=`<div class="card"><span class="tag">LEVEL 2 — MENCOCOKKAN</span><p>Pasangkan setiap istilah dengan pasangan yang paling tepat.</p>${items.map((x,i)=>`<div style="margin:12px 0"><b>${x[0]}</b><select id="match${i}"><option value="">Pilih...</option>${items.map((y,j)=>`<option value="${j}">${y[1]}</option>`).join('')}</select></div>`).join('')}<button class="btn" onclick="checkLevel2()">PERIKSA LEVEL 2</button><div id="l2fb"></div></div>`;
+}
+function checkLevel2(){let score=0;for(let i=0;i<5;i++)if(+$('match'+i).value===i)score+=6;$('l2fb').innerHTML=`<div class="feedback ${score>=18?'ok':'no'}">Skor Level 2: ${score}/30. ${score>=18?'Lanjut ke Level 3!':'Periksa kembali pasangan istilah.'}</div>`;if(score>=18){setTimeout(()=>level3(),800)}}
+function level3(){const cases=[['Dito melihat warga membakar sampah plastik dan daun. Asap tebal membuatnya batuk. Identifikasi sumber pencemar, sebab-akibat, dan dua solusi.','asap pembakaran sampah'],['SD Nusantara dekat jalan raya dan tempat pembakaran sampah. Siswa terbatuk dan ada siswa yang sesak. Sebutkan dua sumber pencemar dan tiga solusi.','asap kendaraan'],['Rina tinggal di rumah yang sering dipenuhi asap rokok. Adiknya sering batuk. Identifikasi sumber pencemar dan tindakan solusi.','asap rokok']];$('quizArea').innerHTML=`<div class="card"><span class="tag">LEVEL 3 — KASUS</span>${cases.map((c,i)=>`<div class="case"><h3>Kasus ${i+1}</h3><p>${c[0]}</p><textarea id="case${i}" placeholder="Tulis analisismu..."></textarea></div>`).join('')}<button class="btn" onclick="checkLevel3()">📥 KIRIM JAWABAN</button><div id="l3fb"></div></div>`}
+function checkLevel3(){let filled=[0,1,2].map(i=>$('case'+i).value.trim().length>25);let score=filled.filter(Boolean).length*10;$('l3fb').innerHTML=`<div class="feedback ${score===30?'ok':'no'}">Skor Level 3: ${score}/30. ${score===30?'Misi 3 lengkap!':'Lengkapi jawaban setiap kasus dengan sumber, hubungan sebab-akibat, dan solusi.'}</div>`;if(score===30){S.quiz=100;S.done=Array.from(new Set([...S.done,3]));S.unlocked=Math.max(S.unlocked,4);save();setTimeout(()=>show('m4'),900)}}
+const concepts=[
+['K01','Asap Kendaraan',0],['K02','Asap Pabrik',0],['K03','Asap Rokok',0],['K04','Bakar Sampah',0],['K05','Debu',0],
+['K06','Udara Tercemar',1],['K07','Kualitas Udara Menurun',1],
+['K08','Batuk/Pilek',2],['K09','Sesak Napas',2],['K10','Asma',2],['K11','ISPA',2],
+['K12','Gangguan Sistem Pernapasan',3],['K13','Hambatan Asupan Oksigen Optimal',3],
+['K14','Udara Bersih',4],['K15','Pakai Masker',4],['K16','Tidak Merokok',4],['K17','Tanam Pohon',4],['K18','Bersih Lingkungan',4]
+];
+let selectedConcept=null,mapPlaced={};
+function renderMap(){
+ const names=['SUMBER PENCEMAR','POLUSI UDARA','GANGGUAN','DAMPAK KESEHATAN','CARA MENJAGA'];
+ $('branches').innerHTML=names.map((n,i)=>`<div class="branch ${selectedConcept!==null?'active':''}" onclick="placeConcept(${i})"><h4>${i+1}. ${n}</h4>${Object.entries(mapPlaced).filter(([k,v])=>v===i).map(([k])=>`<div class="placed">${concepts.find(c=>c[0]===k)[1]}</div>`).join('')}</div>`).join('');
+ $('conceptBank').innerHTML=concepts.map(c=>`<button class="concept ${selectedConcept===c[0]?'sel':''}" onclick="selectConcept('${c[0]}')">${c[1]}</button>`).join('');
+ const correct=Object.entries(mapPlaced).filter(([k,v])=>concepts.find(c=>c[0]===k)[2]===v).length;S.map=correct;save();$('mapScore').textContent=`Benar: ${correct}/18 • Pilih kartu → pilih cabang`;
+}
+function selectConcept(k){selectedConcept=k;renderMap()}
+function placeConcept(branch){if(!selectedConcept){toast('Pilih kartu konsep dahulu.');return}mapPlaced[selectedConcept]=branch;selectedConcept=null;renderMap();if(Object.keys(mapPlaced).length===18){const c=Object.entries(mapPlaced).filter(([k,v])=>concepts.find(x=>x[0]===k)[2]===v).length;if(c===18){S.done=Array.from(new Set([...S.done,4]));S.unlocked=Math.max(S.unlocked,5);save();toast('Peta konsep sempurna!');setTimeout(()=>show('m5'),900)}else toast('Masih ada kartu yang perlu diperbaiki.')}} 
+function resetMap(){mapPlaced={};selectedConcept=null;renderMap()}
+function submitPBL(){const ids=['pbl1','pbl2','pbl3','pbl4','pbl5'];let ok=ids.map(x=>$(x).value.trim().length>20);let score=ok.filter(Boolean).length*2;S.pbl=score;save();$('pblFeedback').innerHTML=`<div class="feedback ${score>=8?'ok':'no'}">Skor laporan: ${score}/10. ${score>=8?'Analisis cukup lengkap!':'Lengkapi setiap bagian dengan bukti dan alasan solusi.'}</div>`;if(score>=8){S.done=Array.from(new Set([...S.done,5]));S.unlocked=Math.max(S.unlocked,6);save();setTimeout(()=>show('m6'),900)}}
+function renderChecks(){const a=['Saya dapat menyebutkan beberapa gangguan pada sistem pernapasan.','Saya dapat menjelaskan penyebab gangguan pada sistem pernapasan.','Saya dapat menjelaskan hubungan kualitas udara dan kesehatan pernapasan.','Saya dapat memberikan solusi untuk mengurangi risiko gangguan pernapasan.','Saya siap ikut menjaga kebersihan udara di lingkungan sekitar.'];$('checks').innerHTML=a.map((x,i)=>`<label class="check"><input type="checkbox" ${S.checks.includes(i)?'checked':''} onchange="toggleCheck(${i},this.checked)"> <span>${x}</span></label>`).join('')}
+function toggleCheck(i,v){if(v&&!S.checks.includes(i))S.checks.push(i);if(!v)S.checks=S.checks.filter(x=>x!==i);save()}
+function submitReflection(){let refs=['r1','r2','r3','r4'].every(x=>$(x).value.trim());let complete=refs&&S.checks.length===5&&$('commit').value.trim();$('refFeedback').innerHTML=`<div class="feedback ${complete?'ok':'no'}">${complete?'Refleksi lengkap! Lencana siap diterbitkan.':'Isi 4 refleksi, centang 5 indikator, dan tulis komitmen.'}</div>`;if(complete){S.reflection=true;S.done=Array.from(new Set([...S.done,6]));save();setTimeout(()=>show('reward'),800)}}
+function renderDashboard(){$('welcome').textContent='Halo, Detektif '+(S.name||'Muda')+'!';$('missionGrid').innerHTML=[['🔎','Eksplorasi Materi'],['🎬','Bukti Video'],['🧠','Kuis'],['🗺️','Peta Konsep'],['🔬','PBL'],['🌱','Refleksi']].map((m,i)=>{let n=i+1,locked=n>S.unlocked,done=S.done.includes(n);return `<button class="card mission ${locked?'locked':''}" onclick="openMission(${n})"><div class="icon">${m[0]}</div><b>Misi ${n}</b><br><small>${m[1]} ${done?'✓':''}${locked?' 🔒':''}</small></button>`}).join('')}
+function renderReward(){let q=S.quiz||0,map=S.map||0,pbl=S.pbl||0;let total=Math.round(q*.6+(map/40)*20+pbl*2);$('finalScore').textContent=total;$('finalCategory').textContent=total>=86?'🏆 Sangat Baik — Master Detektif Udara':total>=71?'🥈 Baik — Detektif Udara Handal':total>=56?'👍 Cukup — Detektif Udara Muda':'🌱 Perlu Bimbingan — Calon Detektif';$('certName').textContent=S.name||'Nama Siswa';$('certClass').textContent=S.klass||'VI';$('certDate').textContent=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}
+function goBack(){const active=document.querySelector('.screen.active')?.id;if(active==='dashboard'||active==='start')return;show('dashboard')}
+if(S.name){$('studentName').value=S.name;$('studentClass').value=S.klass;renderDashboard()}
+</script>
+</body>
+</html>

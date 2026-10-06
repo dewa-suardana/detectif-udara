@@ -97,6 +97,7 @@ small{color:var(--muted)}h2{font-size:22px;margin:5px 0 12px}h4{margin:10px 0 6p
 </section>
 
 <section id="reward" class="screen">
+<div class="card" id="syncCard"><h3>📤 Hasil Belajar</h3><p class="mini">Hasil dapat dikirim ke database guru agar guru dapat melihat nama, kelas, progres, dan skor.</p><button class="btn" onclick="sendResultsToTeacher()">📤 KIRIM HASIL KE GURU</button><div id="syncFeedback"></div></div>
 <h2>🏅 Reward Detektif Udara</h2>
 <div class="card"><div class="score" id="finalScore">0</div><p style="text-align:center">Skor Akhir / 100</p><div id="finalCategory" style="text-align:center;font-weight:800"></div></div>
 <div class="certificate" id="certificate"><div class="seal">🏅</div><h1>SERTIFIKAT PENGHARGAAN DIGITAL</h1><h2>DETEKTIF UDARA</h2><p>Diberikan kepada:</p><h2 id="certName">Nama Siswa</h2><p>Kelas <span id="certClass">VI</span></p><p>Atas keberhasilan menyelesaikan pembelajaran digital IPAS:<br><b>“Bersih Udaranya, Sehat Tubuhnya”</b></p><p>“BERSIH UDARANYA, SEHAT TUBUHNYA!”</p><p id="certDate"></p></div>
@@ -107,11 +108,15 @@ small{color:var(--muted)}h2{font-size:22px;margin:5px 0 12px}h4{margin:10px 0 6p
 
 <div class="nav"><button class="btn secondary" onclick="show('dashboard')">🏠 Markas</button><button class="btn secondary" onclick="goBack()">← Kembali</button></div>
 <div id="toast" class="toast"></div>
+<form id="resultForm" method="POST" target="resultFrame" style="display:none"></form>
+<iframe name="resultFrame" id="resultFrame" style="display:none"></iframe>
 </div>
 
 <script>
-const KEY='detektifUdaraV1';
-let S=JSON.parse(localStorage.getItem(KEY)||'null')||{name:'',klass:'VI',unlocked:1,done:[],quiz:0,map:0,pbl:0,obs:false,reflection:false,material:[],checks:[]};
+const KEY='detektifUdaraV2';
+// Setelah membuat Google Apps Script, tempel URL Web App di bawah ini.
+const BACKEND_URL='https://script.google.com/macros/s/AKfycbyRTxfgHmoyJsLOv4UoqGR1VxH4nYIarLqZsGbjFFZWhETxjdBwFAyy-pACbSN6dkE8/exec';
+let S=JSON.parse(localStorage.getItem(KEY)||'null')||{name:'',klass:'VI',unlocked:1,done:[],quiz:0,map:0,pbl:0,obs:false,reflection:false,material:[],checks:[],submitted:false,submissionId:''};
 const save=()=>localStorage.setItem(KEY,JSON.stringify(S));
 const $=id=>document.getElementById(id);
 function toast(t){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>$('toast').style.display='none',2200)}
@@ -200,9 +205,26 @@ function resetMap(){mapPlaced={};selectedConcept=null;renderMap()}
 function submitPBL(){const ids=['pbl1','pbl2','pbl3','pbl4','pbl5'];let ok=ids.map(x=>$(x).value.trim().length>20);let score=ok.filter(Boolean).length*2;S.pbl=score;save();$('pblFeedback').innerHTML=`<div class="feedback ${score>=8?'ok':'no'}">Skor laporan: ${score}/10. ${score>=8?'Analisis cukup lengkap!':'Lengkapi setiap bagian dengan bukti dan alasan solusi.'}</div>`;if(score>=8){S.done=Array.from(new Set([...S.done,5]));S.unlocked=Math.max(S.unlocked,6);save();setTimeout(()=>show('m6'),900)}}
 function renderChecks(){const a=['Saya dapat menyebutkan beberapa gangguan pada sistem pernapasan.','Saya dapat menjelaskan penyebab gangguan pada sistem pernapasan.','Saya dapat menjelaskan hubungan kualitas udara dan kesehatan pernapasan.','Saya dapat memberikan solusi untuk mengurangi risiko gangguan pernapasan.','Saya siap ikut menjaga kebersihan udara di lingkungan sekitar.'];$('checks').innerHTML=a.map((x,i)=>`<label class="check"><input type="checkbox" ${S.checks.includes(i)?'checked':''} onchange="toggleCheck(${i},this.checked)"> <span>${x}</span></label>`).join('')}
 function toggleCheck(i,v){if(v&&!S.checks.includes(i))S.checks.push(i);if(!v)S.checks=S.checks.filter(x=>x!==i);save()}
-function submitReflection(){let refs=['r1','r2','r3','r4'].every(x=>$(x).value.trim());let complete=refs&&S.checks.length===5&&$('commit').value.trim();$('refFeedback').innerHTML=`<div class="feedback ${complete?'ok':'no'}">${complete?'Refleksi lengkap! Lencana siap diterbitkan.':'Isi 4 refleksi, centang 5 indikator, dan tulis komitmen.'}</div>`;if(complete){S.reflection=true;S.done=Array.from(new Set([...S.done,6]));save();setTimeout(()=>show('reward'),800)}}
+function submitReflection(){let refs=['r1','r2','r3','r4'].every(x=>$(x).value.trim());let complete=refs&&S.checks.length===5&&$('commit').value.trim();$('refFeedback').innerHTML=`<div class="feedback ${complete?'ok':'no'}">${complete?'Refleksi lengkap! Lencana siap diterbitkan.':'Isi 4 refleksi, centang 5 indikator, dan tulis komitmen.'}</div>`;if(complete){S.reflection=true;S.done=Array.from(new Set([...S.done,6]));save();setTimeout(()=>{show('reward');sendResultsToTeacher()},800)}}
 function renderDashboard(){$('welcome').textContent='Halo, Detektif '+(S.name||'Muda')+'!';$('missionGrid').innerHTML=[['🔎','Eksplorasi Materi'],['🎬','Bukti Video'],['🧠','Kuis'],['🗺️','Peta Konsep'],['🔬','PBL'],['🌱','Refleksi']].map((m,i)=>{let n=i+1,locked=n>S.unlocked,done=S.done.includes(n);return `<button class="card mission ${locked?'locked':''}" onclick="openMission(${n})"><div class="icon">${m[0]}</div><b>Misi ${n}</b><br><small>${m[1]} ${done?'✓':''}${locked?' 🔒':''}</small></button>`}).join('')}
-function renderReward(){let q=S.quiz||0,map=S.map||0,pbl=S.pbl||0;let total=Math.round(q*.6+(map/40)*20+pbl*2);$('finalScore').textContent=total;$('finalCategory').textContent=total>=86?'🏆 Sangat Baik — Master Detektif Udara':total>=71?'🥈 Baik — Detektif Udara Handal':total>=56?'👍 Cukup — Detektif Udara Muda':'🌱 Perlu Bimbingan — Calon Detektif';$('certName').textContent=S.name||'Nama Siswa';$('certClass').textContent=S.klass||'VI';$('certDate').textContent=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}
+function renderReward(){let q=S.quiz||0,map=S.map||0,pbl=S.pbl||0;let total=Math.round(q*.6+(map/40)*20+pbl*2);$('finalScore').textContent=total;$('finalCategory').textContent=total>=86?'🏆 Sangat Baik — Master Detektif Udara':total>=71?'🥈 Baik — Detektif Udara Handal':total>=56?'👍 Cukup — Detektif Udara Muda':'🌱 Perlu Bimbingan — Calon Detektif';$('certName').textContent=S.name||'Nama Siswa';$('certClass').textContent=S.klass||'VI';$('certDate').textContent=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});if($('syncFeedback'))$('syncFeedback').innerHTML=S.submitted?'<div class="feedback ok">✅ Hasil terakhir sudah dikirim ke guru.</div>':''}
+function finalScore(){let q=S.quiz||0,map=S.map||0,pbl=S.pbl||0;return Math.round(q*.6+(map/40)*20+pbl*2)}
+function resultPayload(){return {submissionId:S.submissionId||'',name:S.name||'',klass:S.klass||'VI',score:finalScore(),quiz:S.quiz||0,map:S.map||0,pbl:S.pbl||0,missions:(S.done||[]).join(','),observation:S.obs?'Selesai':'Belum',reflection:S.reflection?'Selesai':'Belum',completedAt:new Date().toISOString()}}
+function sendResultsToTeacher(){
+ const fb=$('syncFeedback');
+ if(BACKEND_URL.includes('PASTE_APPS_SCRIPT')){fb.innerHTML='<div class="feedback no">Backend belum dipasang. Setelah Google Apps Script selesai, tempel URL Web App ke variabel <b>BACKEND_URL</b> pada file index.html.</div>';return;}
+ if(!S.name){fb.innerHTML='<div class="feedback no">Nama siswa belum ada.</div>';return;}
+ if(!S.submissionId) S.submissionId='DU-'+Date.now()+'-'+Math.random().toString(36).slice(2,8).toUpperCase();
+ save();
+ const data=resultPayload();
+ const form=$('resultForm');form.innerHTML='';
+ Object.entries(data).forEach(([k,v])=>{const input=document.createElement('input');input.type='hidden';input.name=k;input.value=v;form.appendChild(input)});
+ form.action=BACKEND_URL;
+ form.submit();
+ S.submitted=true;save();
+ fb.innerHTML='<div class="feedback ok">✅ Hasil sudah dikirim. Guru dapat memeriksanya di dashboard.</div>';
+}
+
 function goBack(){const active=document.querySelector('.screen.active')?.id;if(active==='dashboard'||active==='start')return;show('dashboard')}
 if(S.name){$('studentName').value=S.name;$('studentClass').value=S.klass;renderDashboard()}
 </script>
